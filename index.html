@@ -1,45 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting...</title>
-  <style>
-    body {
-      background-color: #0d1117;
-      color: #c9d1d9;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .loader {
-      border: 4px solid #30363d;
-      border-top: 4px solid #58a6ff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    h1 {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-  </style>
-  <script>
-    setTimeout(() => {
-      window.location.href = "https://yt.gearwap.ru/form/a89dceeb-1507-4b37-b282-29b18e218612";
-    }, 1500);
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ART OF WAR 3 TIMER GUIDE</title>
+    
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon (Shield Emoji) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2313/2313448.png">
+    
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-blitz: #ffd700;
+            --color-tour: #00e5ff;
+            --color-22: #ff4b4b;
+            --color-33: #00ff88;
+            --bg-overlay-dark: rgba(0, 0, 0, 0.92);
+            --card-bg-dark: rgba(20, 25, 30, 0.85);
+            --card-border-light: rgba(255, 255, 255, 0.15);
+            --text-light: #f0f0f0;
+            --text-dim: #b0b0b0;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 20px 0; /* Added vertical spacing */
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: var(--text-light);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Spacing between header, grid, footer */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .background-image-global {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1542256840-01c600e6f0f4?q=80&w=2600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4) grayscale(0.2); 
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-overlay-dark);
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            width: 90%;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 18px var(--color-tour), 0 0 30px rgba(0, 229, 255, 0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(15px, 3vh, 30px);
+            width: 94%;
+            max-width: 1000px;
+            /* Removed fixed height to allow content to size naturally */
+            margin: 20px 0; 
+        }
+
+        .card {
+            background: var(--card-bg-dark);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 45px rgba(0,0,0,0.7);
+            transition: transform 0.2s ease;
+            position: relative;
+            /* Ensure cards have enough height for big images */
+            min-height: clamp(250px, 35vh, 400px); 
+        }
+
+        .card:active { transform: scale(0.98); }
+
+        .card-image {
+            width: 100%;
+            /* Make images occupy substantial height */
+            height: 55%; 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            filter: brightness(0.9) contrast(1.1);
+            position: relative;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(20,25,30,1) 0%, rgba(20,25,30,0) 60%);
+        }
+
+        .card-content {
+            padding: 10px 15px 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Push timer to bottom */
+            z-index: 2;
+        }
+
+        .mode-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: clamp(1rem, 4vw, 1.8rem);
+            letter-spacing: 1.5px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 3;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            margin: 0;
+        }
+
+        .mode-sub {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .timer-display {
+            font-weight: 700;
+            text-align: right;
+            font-size: clamp(2.8rem, 11vw, 4.5rem); /* Big legible timers */
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .footer {
+            text-align: center;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Color Accents */
+        .c-blitz { border-left: 4px solid var(--color-blitz); }
+        .c-blitz .mode-title, .c-blitz .timer-display { color: var(--color-blitz); }
+
+        .c-tour { border-left: 4px solid var(--color-tour); }
+        .c-tour .mode-title, .c-tour .timer-display { color: var(--color-tour); }
+
+        .c-22 { border-left: 4px solid var(--color-22); }
+        .c-22 .mode-title, .c-22 .timer-display { color: var(--color-22); }
+
+        .c-33 { border-left: 4px solid var(--color-33); }
+        .c-33 .mode-title, .c-33 .timer-display { color: var(--color-33); }
+
+        /* Mobile Landscape Fix */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .dashboard { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+            .card { min-height: 200px; }
+            .card-image { height: 50%; }
+            .timer-display { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+            h1 { font-size: 1.2rem; }
+        }
+        
+        /* Small Mobile Fix */
+        @media (max-width: 380px) {
+            .dashboard { grid-template-columns: 1fr; max-width: 320px;}
+            .card { min-height: 180px; flex-direction: row; align-items: center;}
+            .card-image { width: 40%; height: 100%; padding: 0; }
+            .card-image::before { background: linear-gradient(to right, rgba(20,25,30,1) 0%, rgba(20,25,30,0) 100%); }
+            .mode-title { position: static; font-size: 1.2rem; margin-bottom: 5px;}
+            .card-content { padding: 10px; align-items: flex-end; }
+            .timer-display { font-size: 2.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="loader"></div>
-  <h1>Redirecting...</h1>
+
+    <div class="background-image-global"></div>
+    <div class="overlay"></div>
+
+    <header>
+        <h1>ART OF WAR 3<br>TIMER GUIDE</h1>
+    </header>
+
+    <div class="dashboard">
+        <!-- Blitz -->
+        <div class="card c-blitz">
+            <div class="mode-title">BLITZ</div>
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/Sci-fi%20blitz%20soldier%20firing%20rifle%20explosions%20golden%20light%20art%20of%20war%203?width=400&height=400&seed=10');"></div>
+            <div class="card-content">
+                <div class="mode-sub">30 MIN CYCLE</div>
+                <div class="timer-display" id="t-blitz">--:--</div>
+            </div>
+        </div>
+
+        <!-- Tournament -->
+        <div class="card c-tour">
+            <div class="mode-title">TOURNAMENT</div>
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/futuristic%20stadium%20arena%20blue%20neon%20lights%20crowd%20esports%20art%20of%20war%203?width=400&height=400&seed=20');"></div>
+            <div class="card-content">
+                <div class="mode-sub">30 MIN CYCLE</div>
+                <div class="timer-display" id="t-tour">--:--</div>
+            </div>
+        </div>
+
+        <!-- 2 VS 2 -->
+        <div class="card c-22">
+            <div class="mode-title">2 VS 2</div>
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/two%20sci-fi%20soldiers%20back%20to%20back%20red%20laser%20urban%20combat%20art%20of%20war%203?width=400&height=400&seed=30');"></div>
+            <div class="card-content">
+                <div class="mode-sub">1 HOUR CYCLE</div>
+                <div class="timer-display" id="t-22">--:--</div>
+            </div>
+        </div>
+
+        <!-- 3 VS 3 -->
+        <div class="card c-33">
+            <div class="mode-title">3 VS 3</div>
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/column%20of%20tanks%20and%20jets%20green%20hud%20desert%20storm%20art%20of%20war%203?width=400&height=400&seed=40');"></div>
+            <div class="card-content">
+                <div class="mode-sub">1 HOUR CYCLE</div>
+                <div class="timer-display" id="t-33">--:--</div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+
+        function pad(num) { return num.toString().padStart(2, '0'); }
+
+        function getRemainingTime(cycleMinutes, utcTargetMinute) {
+            const now = new Date();
+            const currentSecondsInHour = (now.getUTCMinutes() * 60) + now.getUTCSeconds();
+            const cycleSeconds = cycleMinutes * 60;
+            const targetSeconds = utcTargetMinute * 60;
+
+            let diff = targetSeconds - currentSecondsInHour;
+            while (diff <= 0) diff += 3600; 
+
+            let timeRemaining = diff % cycleSeconds;
+            if (timeRemaining === 0) timeRemaining = cycleSeconds;
+
+            return `${pad(Math.floor(timeRemaining / 60))}:${pad(timeRemaining % 60)}`;
+        }
+
+        function updateTimers() {
+            // Targets based on IST 1:33 AM / UTC 8:03 PM data
+            document.getElementById('t-blitz').innerText = getRemainingTime(30, 20); // Targets UTC :20/:50
+            document.getElementById('t-tour').innerText = getRemainingTime(30, 0);   // Targets UTC :00/:30
+            document.getElementById('t-22').innerText = getRemainingTime(60, 10);    // Targets UTC :10
+            document.getElementById('t-33').innerText = getRemainingTime(60, 40);    // Targets UTC :40
+        }
+
+        setInterval(updateTimers, 1000);
+        updateTimers();
+    </script>
 </body>
 </html>
+
+
