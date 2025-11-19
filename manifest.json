@@ -1,6 +1,6 @@
 {
-  "name": "AOW3 War Room",
-  "short_name": "War Room",
+  "name": "Aow3-Timer",
+  "short_name": "Aow3-Timer",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
