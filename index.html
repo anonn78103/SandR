@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Vital for mobile scaling -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ART OF WAR 3 TIMER GUIDE</title>
     
+    <!-- PWA Manifest Link -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- Favicon: Special Forces Soldier -->
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3063/3063822.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3063/3063822.png">
+    <!-- Favicon (War Related: Crossed Swords) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2313/2313448.png">
     
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -22,7 +24,7 @@
             --color-22: #ff4b4b;
             --color-33: #00ff88;
             --bg-overlay-dark: rgba(0, 0, 0, 0.85);
-            --card-bg-dark: rgba(18, 22, 28, 0.92);
+            --card-bg-dark: rgba(18, 22, 28, 0.9);
             --card-border-light: rgba(255, 255, 255, 0.12);
             --text-light: #f0f0f0;
             --text-dim: #999;
@@ -36,6 +38,7 @@
             font-family: 'Orbitron', sans-serif;
             background-color: #000;
             color: var(--text-light);
+            /* Full height of the device view, no scroll on main page */
             height: 100vh;
             height: 100dvh; 
             display: flex;
@@ -46,13 +49,14 @@
             overflow: hidden; 
         }
 
+        /* Background Image */
         .background-image-global {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://images.unsplash.com/photo-1542256840-01c600e6f0f4?q=80&w=2600&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.4) grayscale(0.3); 
+            filter: brightness(0.5) grayscale(0.3); 
             z-index: -2;
         }
 
@@ -63,8 +67,9 @@
             z-index: -1;
         }
 
+        /* Header Area */
         header {
-            flex: 0 0 auto;
+            flex: 0 0 auto; /* Don't shrink */
             text-align: center;
             width: 100%;
             padding: 1.5vh 0;
@@ -81,17 +86,21 @@
             line-height: 1;
         }
 
+        /* Main Grid Container */
         .dashboard {
-            flex: 1 1 auto;
+            flex: 1 1 auto; /* Grow to fill space */
             display: grid;
             width: 94%;
             max-width: 1400px;
             margin-bottom: 2vh;
             gap: 1.5vh;
+            
+            /* DESKTOP DEFAULT (2x2 Grid) */
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
         }
 
+        /* Card Styles */
         .card {
             background: var(--card-bg-dark);
             backdrop-filter: blur(10px);
@@ -102,18 +111,22 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
             transition: transform 0.1s;
         }
+
         .card:active { transform: scale(0.98); }
 
+        /* Image Section */
         .card-image {
             width: 100%;
-            height: 55%;
+            height: 55%; /* Takes top half */
             background-size: cover;
             background-position: center;
             position: relative;
         }
+
+        /* Dark fade on image */
         .card-image::before {
             content: '';
             position: absolute;
@@ -121,6 +134,7 @@
             background: linear-gradient(to top, rgba(18,22,28,1) 0%, rgba(18,22,28,0) 80%);
         }
 
+        /* Content Section */
         .card-content {
             flex: 1;
             padding: 2vh 3vw;
@@ -130,6 +144,7 @@
             position: relative;
         }
 
+        /* Titles and Text */
         .mode-title {
             position: absolute;
             top: 10px;
@@ -174,54 +189,96 @@
         .c-33 { border-left: 4px solid var(--color-33); }
         .c-33 .mode-title, .c-33 .timer-display { color: var(--color-33); }
 
-        /* Mobile Portrait */
+
+        /* --- RESPONSIVE LOGIC --- */
+
+        /* MOBILE PORTRAIT (Phones) */
+        /* Instead of squishing 2 columns, we stack 4 rows. */
+        /* We use 'fr' so they exactly fill the screen height. */
         @media (max-width: 600px) and (orientation: portrait) {
             h1 { font-size: 1.5rem; margin-bottom: 0.5vh; }
+            
             .dashboard {
-                grid-template-columns: 1fr; 
-                grid-template-rows: repeat(4, 1fr); 
+                grid-template-columns: 1fr; /* 1 Column */
+                grid-template-rows: repeat(4, 1fr); /* 4 Equal Rows */
                 gap: 1vh;
                 width: 96%;
             }
-            .card { flex-direction: row; align-items: center; }
-            .card-image { width: 45%; height: 100%; border-right: 1px solid rgba(255,255,255,0.05); }
-            .card-image::before { background: linear-gradient(to right, rgba(18,22,28,1) 0%, rgba(18,22,28,0) 100%); }
-            .mode-title {
-                top: auto; bottom: 10px; left: 10px;
-                font-size: 1.2rem; text-shadow: 0 0 5px black; width: 90%; line-height: 1;
+
+            /* Side-by-Side Layout for Mobile Cards to save vertical space */
+            .card {
+                flex-direction: row; /* Image Left, Text Right */
+                align-items: center;
             }
-            .card-content { padding: 0 15px; justify-content: center; align-items: flex-end; }
-            .timer-display { font-size: 12vw; }
-            .mode-sub { display: none; }
+
+            .card-image {
+                width: 45%; /* Image takes left side */
+                height: 100%;
+                border-right: 1px solid rgba(255,255,255,0.05);
+            }
+            
+            .card-image::before {
+                background: linear-gradient(to right, rgba(18,22,28,1) 0%, rgba(18,22,28,0) 100%);
+            }
+
+            .mode-title {
+                top: auto;
+                bottom: 10px;
+                left: 10px;
+                font-size: 1.2rem; /* Smaller title for mobile */
+                text-shadow: 0 0 5px black;
+                width: 90%;
+                line-height: 1;
+            }
+
+            .card-content {
+                padding: 0 15px;
+                justify-content: center;
+                align-items: flex-end;
+            }
+            
+            .timer-display {
+                font-size: 12vw; /* Big relative to width */
+            }
+            
+            .mode-sub {
+                display: none; /* Hide "30 min cycle" on super small screens to save clean look */
+            }
         }
 
-        /* Mobile Landscape */
+        /* MOBILE LANDSCAPE (Gaming Mode) */
         @media (max-height: 500px) and (orientation: landscape) {
             h1 { font-size: 1.2rem; display: inline-block; padding-right: 20px;}
             header { padding: 5px 0; text-align: left; padding-left: 20px;}
+            
             .dashboard {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(4, 1fr); /* 4 Cols in 1 Row */
                 grid-template-rows: 1fr;
                 height: 85dvh;
                 margin-top: 0;
             }
+            
             .card { flex-direction: column; }
             .card-image { height: 50%; }
             .mode-title { font-size: 1.1rem; top: 5px; left: 5px; }
             .timer-display { font-size: 8vh; }
         }
+        
     </style>
 </head>
 <body>
+
     <div class="background-image-global"></div>
     <div class="overlay"></div>
+
     <header>
         <h1>ART OF WAR 3 TIMER GUIDE</h1>
     </header>
+
     <div class="dashboard">
-        <!-- Blitz: Fire/Explosive Theme -->
+        <!-- Blitz -->
         <div class="card c-blitz">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1618522827479-314cb1292d14?q=80&w=800&auto=format&fit=crop');">
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/Sci-fi%20blitz%20soldier%20firing%20rifle%20explosions%20golden%20light%20art%20of%20war%203?width=400&height=400&seed=10');">
                 <h2 class="mode-title">BLITZ</h2>
             </div>
             <div class="card-content">
@@ -229,9 +286,10 @@
                 <div class="timer-display" id="t-blitz">--:--</div>
             </div>
         </div>
-        <!-- Tournament: Blue Tech Theme -->
+
+        <!-- Tournament -->
         <div class="card c-tour">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1519669556867-7d2c09149877?q=80&w=800&auto=format&fit=crop');">
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/futuristic%20stadium%20arena%20blue%20neon%20lights%20crowd%20esports%20art%20of%20war%203?width=400&height=400&seed=20');">
                 <h2 class="mode-title">TOURNAMENT</h2>
             </div>
             <div class="card-content">
@@ -239,9 +297,10 @@
                 <div class="timer-display" id="t-tour">--:--</div>
             </div>
         </div>
-        <!-- 2v2: Red/Urban Theme -->
+
+        <!-- 2 VS 2 -->
         <div class="card c-22">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1550526279-453213997245?q=80&w=800&auto=format&fit=crop');">
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/two%20sci-fi%20soldiers%20back%20to%20back%20red%20laser%20urban%20combat%20art%20of%20war%203?width=400&height=400&seed=30');">
                 <h2 class="mode-title">2 VS 2</h2>
             </div>
             <div class="card-content">
@@ -249,9 +308,10 @@
                 <div class="timer-display" id="t-22">--:--</div>
             </div>
         </div>
-        <!-- 3v3: Green/Tank Theme -->
+
+        <!-- 3 VS 3 -->
         <div class="card c-33">
-            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1599365867781-c0e79563190e?q=80&w=800&auto=format&fit=crop');">
+            <div class="card-image" style="background-image: url('https://image.pollinations.ai/prompt/column%20of%20tanks%20and%20jets%20green%20hud%20desert%20storm%20art%20of%20war%203?width=400&height=400&seed=40');">
                 <h2 class="mode-title">3 VS 3</h2>
             </div>
             <div class="card-content">
@@ -260,34 +320,42 @@
             </div>
         </div>
     </div>
+
     <script>
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js');
             });
         }
+
         function pad(num) { return num.toString().padStart(2, '0'); }
+
         function getRemainingTime(cycleMinutes, utcTargetMinute) {
             const now = new Date();
             const currentSecondsInHour = (now.getUTCMinutes() * 60) + now.getUTCSeconds();
             const cycleSeconds = cycleMinutes * 60;
             const targetSeconds = utcTargetMinute * 60;
+
             let diff = targetSeconds - currentSecondsInHour;
             while (diff <= 0) diff += 3600; 
+
             let timeRemaining = diff % cycleSeconds;
             if (timeRemaining === 0) timeRemaining = cycleSeconds;
+
             return `${pad(Math.floor(timeRemaining / 60))}:${pad(timeRemaining % 60)}`;
         }
+
         function updateTimers() {
+            // Logic anchored to your data
             document.getElementById('t-blitz').innerText = getRemainingTime(30, 20);
             document.getElementById('t-tour').innerText = getRemainingTime(30, 0);
             document.getElementById('t-22').innerText = getRemainingTime(60, 10);
             document.getElementById('t-33').innerText = getRemainingTime(60, 40);
         }
+
         setInterval(updateTimers, 1000);
         updateTimers();
     </script>
 </body>
 </html>
-
-
