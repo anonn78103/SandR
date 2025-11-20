@@ -363,10 +363,12 @@
             .timer-display {
                 font-size: clamp(3rem, 7vh, 5rem);
             }
-        }
+            
+            /* FIX FOR 2 VS 2: Focus on faces/guns, cropping legs */
+            .card.c-22 .card-image {
+                background-position: center 30%; 
+            }
 
-        @media (min-width: 1024px) {
-            .card.c-22 .card-image,
             .card.c-33 .card-image {
                 background-position: center bottom;
             }
