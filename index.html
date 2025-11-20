@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ART OF WAR 3 TIMER GUIDE</title>
+    <title>AOW3 Radar | Art of War 3 Radar</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="./ico.jpeg">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2313/2313448.png">
     <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="AOW3 Radar">
+    <meta name="description"
+        content="AOW3 Radar — realtime timers for Art of War 3. See exactly when Blitz, Tournament, 2v2 and 3v3 battles start. Clean UI, PWA-ready, and instant notifications for your next battle.">
+    <meta name="keywords"
+        content="Art of War 3, AOW3, battle timer, game timer, Blitz timer, Tournament timer, 2v2 timer, 3v3 timer, game schedule, PWA">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="./index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AOW3 Radar | Art of War 3 Radar">
+    <meta property="og:description"
+        content="Realtime battle timers for Art of War 3 — track Blitz, Tournament, 2v2 and 3v3 start times. PWA-ready and optimized for mobile.">
+    <meta property="og:image" content="./ico.jpeg">
+    <meta property="og:url" content="./index.html">
+    <meta property="og:site_name" content="AOW3 Radar">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AOW3 Radar | Art of War 3 Radar">
+    <meta name="twitter:description"
+        content="Realtime battle timers for Art of War 3 — track Blitz, Tournament, 2v2 and 3v3 start times. PWA-ready and optimized for mobile.">
+    <meta name="twitter:image" content="./ico.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"AOW3 Radar","url":"./index.html","image":["./ico.jpeg"],"description":"Realtime battle timers and schedule for Art of War 3. See next starts for Blitz, Tournament, 2v2 and 3v3.","applicationCategory":"Game","operatingSystem":"Windows, iOS, Android, Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+    </script>
     <style>
         :root {
             --color-blitz: #ffd700;
@@ -23,7 +47,9 @@
             --text-dim: #999;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -32,29 +58,35 @@
             background-color: #000;
             color: var(--text-light);
             height: 100vh;
-            height: 100dvh; 
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         .background-image-global {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('https://images.unsplash.com/photo-1542256840-01c600e6f0f4?q=80&w=2600&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.5) grayscale(0.3); 
+            filter: brightness(0.5) grayscale(0.3);
             z-index: -2;
         }
 
         .overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.95) 100%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.95) 100%);
             z-index: -1;
         }
 
@@ -97,11 +129,13 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             transition: transform 0.1s;
         }
 
-        .card:active { transform: scale(0.98); }
+        .card:active {
+            transform: scale(0.98);
+        }
 
         .card-image {
             width: 100%;
@@ -115,7 +149,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(18,22,28,1) 0%, rgba(18,22,28,0) 80%);
+            background: linear-gradient(to top, rgba(18, 22, 28, 1) 0%, rgba(18, 22, 28, 0) 80%);
         }
 
         .card-content {
@@ -136,7 +170,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             z-index: 5;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
             margin: 0;
         }
 
@@ -155,24 +189,51 @@
             font-weight: 700;
             text-align: right;
             line-height: 0.9;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
-        .c-blitz { border-left: 4px solid var(--color-blitz); }
-        .c-blitz .mode-title, .c-blitz .timer-display { color: var(--color-blitz); }
+        .c-blitz {
+            border-left: 4px solid var(--color-blitz);
+        }
 
-        .c-tour { border-left: 4px solid var(--color-tour); }
-        .c-tour .mode-title, .c-tour .timer-display { color: var(--color-tour); }
+        .c-blitz .mode-title,
+        .c-blitz .timer-display {
+            color: var(--color-blitz);
+        }
 
-        .c-22 { border-left: 4px solid var(--color-22); }
-        .c-22 .mode-title, .c-22 .timer-display { color: var(--color-22); }
+        .c-tour {
+            border-left: 4px solid var(--color-tour);
+        }
 
-        .c-33 { border-left: 4px solid var(--color-33); }
-        .c-33 .mode-title, .c-33 .timer-display { color: var(--color-33); }
+        .c-tour .mode-title,
+        .c-tour .timer-display {
+            color: var(--color-tour);
+        }
+
+        .c-22 {
+            border-left: 4px solid var(--color-22);
+        }
+
+        .c-22 .mode-title,
+        .c-22 .timer-display {
+            color: var(--color-22);
+        }
+
+        .c-33 {
+            border-left: 4px solid var(--color-33);
+        }
+
+        .c-33 .mode-title,
+        .c-33 .timer-display {
+            color: var(--color-33);
+        }
 
         @media (max-width: 600px) and (orientation: portrait) {
-            h1 { font-size: 1.5rem; margin-bottom: 0.5vh; }
-            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5vh;
+            }
+
             .dashboard {
                 grid-template-columns: 1fr;
                 grid-template-rows: repeat(4, 1fr);
@@ -188,11 +249,11 @@
             .card-image {
                 width: 45%;
                 height: 100%;
-                border-right: 1px solid rgba(255,255,255,0.05);
+                border-right: 1px solid rgba(255, 255, 255, 0.05);
             }
-            
+
             .card-image::before {
-                background: linear-gradient(to right, rgba(18,22,28,1) 0%, rgba(18,22,28,0) 100%);
+                background: linear-gradient(to right, rgba(18, 22, 28, 1) 0%, rgba(18, 22, 28, 0) 100%);
             }
 
             .mode-title {
@@ -210,44 +271,63 @@
                 justify-content: center;
                 align-items: flex-end;
             }
-            
+
             .timer-display {
                 font-size: 12vw;
             }
-            
+
             .mode-sub {
                 display: none;
             }
         }
 
         @media (max-height: 500px) and (orientation: landscape) {
-            h1 { font-size: 1.2rem; display: inline-block; padding-right: 20px;}
-            header { padding: 5px 0; text-align: left; padding-left: 20px;}
-            
+            h1 {
+                font-size: 1.2rem;
+                display: inline-block;
+                padding-right: 20px;
+            }
+
+            header {
+                padding: 5px 0;
+                text-align: left;
+                padding-left: 20px;
+            }
+
             .dashboard {
                 grid-template-columns: repeat(4, 1fr);
                 grid-template-rows: 1fr;
                 height: 85dvh;
                 margin-top: 0;
             }
-            
-            .card { flex-direction: column; }
-            .card-image { height: 50%; }
-            .mode-title { font-size: 1.1rem; top: 5px; left: 5px; }
-            .timer-display { font-size: 8vh; }
+
+            .card {
+                flex-direction: column;
+            }
+
+            .card-image {
+                height: 50%;
+            }
+
+            .mode-title {
+                font-size: 1.1rem;
+                top: 5px;
+                left: 5px;
+            }
+
+            .timer-display {
+                font-size: 8vh;
+            }
         }
-        
     </style>
 </head>
-<body>
 
+<body>
     <div class="background-image-global"></div>
     <div class="overlay"></div>
-
     <header>
         <h1>ART OF WAR 3 TIMER GUIDE</h1>
     </header>
-
     <div class="dashboard">
         <div class="card c-blitz">
             <div class="card-image" style="background-image: url('./33Notext.png');">
@@ -258,7 +338,6 @@
                 <div class="timer-display" id="t-blitz">--:--</div>
             </div>
         </div>
-
         <div class="card c-tour">
             <div class="card-image" style="background-image: url('./img2War.png');">
                 <h2 class="mode-title">TOURNAMENT</h2>
@@ -268,7 +347,6 @@
                 <div class="timer-display" id="t-tour">--:--</div>
             </div>
         </div>
-
         <div class="card c-22">
             <div class="card-image" style="background-image: url('./2soldier.png');">
                 <h2 class="mode-title">2 VS 2</h2>
@@ -278,7 +356,6 @@
                 <div class="timer-display" id="t-22">--:--</div>
             </div>
         </div>
-
         <div class="card c-33">
             <div class="card-image" style="background-image: url('./tank.png');">
                 <h2 class="mode-title">3 VS 3</h2>
@@ -289,40 +366,33 @@
             </div>
         </div>
     </div>
-
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js');
             });
         }
-
         function pad(num) { return num.toString().padStart(2, '0'); }
-
         function getRemainingTime(cycleMinutes, utcTargetMinute) {
             const now = new Date();
             const currentSecondsInHour = (now.getUTCMinutes() * 60) + now.getUTCSeconds();
             const cycleSeconds = cycleMinutes * 60;
             const targetSeconds = utcTargetMinute * 60;
-
             let diff = targetSeconds - currentSecondsInHour;
-            while (diff <= 0) diff += 3600; 
-
+            while (diff <= 0) diff += 3600;
             let timeRemaining = diff % cycleSeconds;
             if (timeRemaining === 0) timeRemaining = cycleSeconds;
-
             return `${pad(Math.floor(timeRemaining / 60))}:${pad(timeRemaining % 60)}`;
         }
-
         function updateTimers() {
             document.getElementById('t-blitz').innerText = getRemainingTime(30, 20);
             document.getElementById('t-tour').innerText = getRemainingTime(30, 0);
             document.getElementById('t-22').innerText = getRemainingTime(60, 10);
             document.getElementById('t-33').innerText = getRemainingTime(60, 40);
         }
-
         setInterval(updateTimers, 1000);
         updateTimers();
     </script>
 </body>
+
 </html>
