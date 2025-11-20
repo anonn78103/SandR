@@ -320,7 +320,7 @@
             }
         }
 
-        /* FIX FOR DESKTOP IMAGE VISIBILITY */
+        /* 💻 DESKTOP FIX: Full Image Background & Content Overlay */
         @media (min-width: 1024px) {
             body {
                 height: auto;
@@ -338,16 +338,29 @@
                 min-height: 400px;
             }
 
+            /* 1. Make the image take up 100% of the card height */
             .card-image {
-                height: 60%;
+                height: 100%;
+            }
+            
+            /* Adjust the overlay gradient to cover the full image, making the content section readable */
+            .card-image::before {
+                background: linear-gradient(to top, rgba(18, 22, 28, 0.8) 0%, rgba(18, 22, 28, 0) 60%);
             }
 
+            /* 2. Style the content section for positioning over the image */
             .card-content {
+                position: absolute; /* Position the content over the image */
+                bottom: 0;
+                left: 0;
+                right: 0;
+                flex: none; /* Reset flex sizing */
                 padding: 20px 30px;
+                background: none; /* Remove background */
             }
 
+            /* 3. Reposition the title to be clearly visible at the top */
             .mode-title {
-                font-size: 2rem;
                 top: 20px;
                 left: 20px;
             }
