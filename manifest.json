@@ -8,12 +8,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./warico.png",
+      "src": "./ico.jpeg",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./warico.png",
+      "src": "./ico.jpeg",
       "sizes": "512x512",
       "type": "image/png"
     }
