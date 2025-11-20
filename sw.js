@@ -38,12 +38,15 @@ self.addEventListener('fetch', evt => {
     evt.respondWith(
       fetch(req).then(networkRes => {
         if (networkRes && networkRes.status === 200) {
-          const copy = networkRes.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
           return networkRes;
         }
-        return caches.match('./index.html') || caches.match('./404.html');
-      }).catch(() => caches.match('./index.html') || caches.match('./404.html'))
+        if (networkRes && networkRes.status === 404) {
+          return caches.match('./404.html') || new Response('Not Found', { status: 404 });
+        }
+        return networkRes;
+      }).catch(() => {
+        return caches.match('./index.html');
+      })
     );
     return;
   }
