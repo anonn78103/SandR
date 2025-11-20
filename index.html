@@ -319,8 +319,43 @@
                 font-size: 8vh;
             }
         }
-   
-        
+
+        /* FIX FOR DESKTOP IMAGE VISIBILITY */
+        @media (min-width: 1024px) {
+            body {
+                height: auto;
+                overflow-y: auto;
+            }
+
+            .dashboard {
+                flex: 0 1 auto;
+                min-height: 80vh;
+                margin: 20px auto;
+                gap: 20px;
+            }
+
+            .card {
+                min-height: 400px;
+            }
+
+            .card-image {
+                height: 60%;
+            }
+
+            .card-content {
+                padding: 20px 30px;
+            }
+
+            .mode-title {
+                font-size: 2rem;
+                top: 20px;
+                left: 20px;
+            }
+
+            .timer-display {
+                font-size: 4rem;
+            }
+        }
     </style>
 </head>
 
