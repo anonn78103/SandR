@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aow3-timers-v6'; // Updated to v6
+const CACHE_NAME = 'Aow3 Radar'; // Updated to v6
 const ASSETS = [
   './',
   './index.html',
