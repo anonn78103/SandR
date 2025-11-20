@@ -319,6 +319,23 @@
                 font-size: 8vh;
             }
         }
+        @media (min-width: 900px) {
+          .dashboard {
+            height: 90vh;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+          }
+          .card {
+            min-height: 350px;
+            flex-direction: column;
+          }
+          .card-image {
+            height: 60%;
+            min-height: 220px;
+            max-height: 320px;
+          }
+        }
+        
     </style>
 </head>
 
