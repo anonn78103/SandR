@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aow3-radar.01k.in/sitemap.xml
