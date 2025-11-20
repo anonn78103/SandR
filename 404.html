@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - SIGNAL LOST</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --primary-color: #00ff41; /* Terminal Green */
+            --bg-color: #0a0a0a;
+            --grid-color: rgba(0, 255, 65, 0.1);
+            --glass-bg: rgba(0, 20, 0, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--primary-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* CRT Screen Overlay Effect */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* --- PURE CSS RADAR --- */
+        .radar-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 40px;
+            perspective: 1000px;
+        }
+
+        .radar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            position: relative;
+            box-shadow: 0 0 20px var(--primary-color), inset 0 0 20px var(--primary-color);
+            background: radial-gradient(circle, rgba(0,255,65,0.1) 0%, rgba(0,0,0,0) 70%);
+            transform: rotateX(60deg) scale(1.2); /* Gives the 3D effect */
+        }
+
+        /* Radar Grid Rings */
+        .radar::before, .radar::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+        }
+        .radar::before { width: 66%; height: 66%; }
+        .radar::after { width: 33%; height: 33%; }
+
+        /* The Rotating Sweep */
+        .sweep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: conic-gradient(transparent 270deg, rgba(0, 255, 65, 0.4) 360deg);
+            animation: spin 2s linear infinite;
+        }
+
+        /* Enemy Blips */
+        .blip {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: red;
+            border-radius: 50%;
+            box-shadow: 0 0 5px red;
+            opacity: 0;
+            animation: blink 2s infinite;
+        }
+        .blip:nth-child(1) { top: 20%; left: 60%; animation-delay: 0.5s; }
+        .blip:nth-child(2) { top: 70%; left: 30%; animation-delay: 1.2s; }
+
+        /* --- TEXT STYLES --- */
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            text-shadow: 2px 2px 0px #000;
+            animation: glitch 1s linear infinite;
+            letter-spacing: 5px;
+        }
+
+        .status-box {
+            border: 1px solid var(--primary-color);
+            background: var(--glass-bg);
+            padding: 15px;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            font-weight: normal;
+        }
+
+        p {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid var(--primary-color);
+            color: var(--bg-color);
+            background: var(--primary-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px,0) skew(0deg); }
+            4%, 60% { transform: translate(-2px,0) skew(0deg); }
+            62% { transform: translate(0,0) skew(5deg); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 3.5rem; }
+            .radar-container { width: 200px; height: 200px; }
+            .container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="radar-container">
+            <div class="radar">
+                <div class="sweep"></div>
+                <div class="blip"></div>
+                <div class="blip"></div>
+            </div>
+        </div>
+
+        <div class="status-box">
+            <div>System Error: 404</div>
+            <div style="font-size: 0.8rem; margin-top: 5px; color: red;">Target Sector Not Found</div>
+        </div>
+
+        <h1>SIGNAL LOST</h1>
+        
+        <p>
+            // WARNING: The coordinates you are attempting to access do not exist.<br>
+            // SUGGESTION: Re-align tactical map or retreat to safe zone.
+        </p>
+
+        <a href="/" class="btn">Return to Base</a>
+    </div>
+
+</body>
+</html>
