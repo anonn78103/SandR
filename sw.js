@@ -1,24 +1,24 @@
 const CACHE_NAME = 'aow3-radar-v1';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/ico.png',
-  '/33Notext.png',
-  '/img2War.png',
-  '/2soldier.png',
-  '/tank.png',
-  '/404.html'
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './icon.svg',
+  './2soldier.png',
+  './33Notext.png',
+  './img2War.png',
+  './tank.png',
+  './404.html'
 ];
 
-self.addEventListener('install', (evt) => {
-  evt.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-  );
+self.addEventListener('install', evt => {
+  evt.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (evt) => {
+self.addEventListener('activate', evt => {
   evt.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
@@ -31,38 +31,36 @@ function isNavigationRequest(request) {
   return request.mode === 'navigate' || (request.method === 'GET' && request.headers.get('accept')?.includes('text/html'));
 }
 
-self.addEventListener('fetch', (evt) => {
+self.addEventListener('fetch', evt => {
   const req = evt.request;
 
   if (isNavigationRequest(req)) {
     evt.respondWith(
-      fetch(req)
-        .then(networkRes => {
-          if (networkRes && networkRes.status === 200) {
-            const clone = networkRes.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put('/index.html', clone));
-            return networkRes;
-          }
-          return caches.match('/index.html') || caches.match('/404.html') || networkRes;
-        })
-        .catch(() => caches.match('/index.html') || caches.match('/404.html'))
+      fetch(req).then(networkRes => {
+        if (networkRes && networkRes.status === 200) {
+          const copy = networkRes.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
+          return networkRes;
+        }
+        return caches.match('./index.html') || caches.match('./404.html');
+      }).catch(() => caches.match('./index.html') || caches.match('./404.html'))
     );
     return;
   }
 
-  // For static assets: cache-first, fallback to network
   evt.respondWith(
     caches.match(req).then(cached => {
       if (cached) return cached;
       return fetch(req).then(networkRes => {
         if (!networkRes || networkRes.status !== 200) return networkRes;
         const copy = networkRes.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
+        caches.open(CACHE_NAME).then(cache => {
+          try { cache.put(req, copy); } catch (e) {}
+        });
         return networkRes;
       }).catch(() => {
-        // optional: return a fallback asset for images, etc. e.g. '/ico.jpeg' if you cached it
-        if (req.destination === 'image') return caches.match('/ico.jpeg');
-        return caches.match('/index.html');
+        if (req.destination === 'image') return caches.match('./icon-192.png');
+        return caches.match('./index.html');
       });
     })
   );
